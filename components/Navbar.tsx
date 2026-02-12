@@ -25,10 +25,8 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-surface-glass backdrop-blur-xl border-b border-surface-glassBorder shadow-soft"
-          : "bg-transparent"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gradient-to-br from-brand-lavender via-brand-pink to-brand-periwinkle border-b border-white/30",
+        scrolled && "shadow-soft"
       )}
     >
       <nav
