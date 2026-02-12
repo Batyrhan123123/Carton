@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-lavender: #E8E0F0;
+  --color-pink: #F5E6EC;
+  --color-periwinkle: #D4D8F0;
+  --color-cyan: #7DD3D0;
+  --color-blue: #5B9BD5;
+  --color-purple: #9B7EBD;
+  --color-lime: #B8D4A8;
+  --radius-card: 1.5rem;
+  --radius-button: 9999px;
+  --shadow-soft: 0 4px 24px -4px rgba(0,0,0,0.08), 0 8px 48px -8px rgba(0,0,0,0.06);
+  --shadow-plastic: 0 8px 32px -8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased text-gray-800 bg-gradient-to-br from-brand-lavender via-brand-pink to-brand-periwinkle min-h-screen;
+  background-attachment: fixed;
+}
+
+/* Noise overlay — очень слабый */
+.noise-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Focus visible для доступности */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-brand-cyan;
+}
+
+/* Минимальный размер кликабельных элементов */
+button,
+a[href],
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (min-width: 768px) {
+  button:not(.inline-size), a.btn {
+    min-width: auto;
+  }
+}
+
+/* Плавный скролл по якорям */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brand-cyan to-brand-blue px-6 py-3 text-base font-semibold text-white shadow-soft transition-all duration-200 hover:shadow-soft-lg hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 min-h-[48px] relative overflow-hidden;
+  }
+  .btn-primary::after {
+    content: "";
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+    transform: translateX(-100%);
+  }
+  .btn-primary:hover::after {
+    opacity: 1;
+    animation: btn-sheen 0.6s ease-out;
+  }
+  @keyframes btn-sheen {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-brand-cyan/60 bg-white/60 px-6 py-3 text-base font-semibold text-gray-800 backdrop-blur-sm transition-all duration-200 hover:bg-white/80 hover:border-brand-cyan hover:shadow-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 min-h-[48px];
+  }
+}
